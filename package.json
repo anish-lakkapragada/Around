@@ -18,7 +18,21 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "firebase": "^9.0.2",
     "moment": "^2.29.1",
     "sirv-cli": "^1.0.0"
-  }
+  },
+  "description": "",
+  "main": "rollup.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anish-lakkapragada/Around.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anish-lakkapragada/Around/issues"
+  },
+  "homepage": "https://github.com/anish-lakkapragada/Around#readme"
 }

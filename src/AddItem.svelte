@@ -103,7 +103,6 @@
 
 </script> 
 <main>
-    <h1> Homework Manager, cuz high school <span id="stress"> stressful </span></h1>
     <form on:submit={onSubmit} class = "grid-3">
         <input bind:this={inputName} id = "inputName" class:normal-width-name={normalWidthName} type="text" placeholder="Name" bind:value={item.name}/>
         <input bind:this={inputTime} id = "inputTime" class:adjust-width={errorTime} type="number" placeholder="Time Needed" bind:value={item.time}/>
@@ -142,10 +141,6 @@
     #inputName::placeholder, #inputTime::placeholder, #inputDueDate::placeholder, #descTextArea::placeholder, #inputPoints::placeholder {
         color: var(--color, "lightgray");
         opacity: var(--opacity, 0.6);
-    }
-    
-    #stress {
-        color: red;
     }
 
     .adjust-width {
