@@ -2,24 +2,38 @@
 <script> 
     import {database} from "./firebaseLoad"
     import {ref, set, child, get} from "firebase/database"; 
-    import {createEventDispatcher} from "svelte"; 
+    import {createEventDispatcher} from "svelte";   
+    import Loading from "./Loading.svelte";
+    
+    let inFirst2 = true; 
+
+    setTimeout(() => {
+        // if we're still in here, make everything visible 
+        console.log("dank");
+        inFirst2 = false;
+    }, 800); 
 
     const eventDispatcher = createEventDispatcher(); 
 
     window.onSignIn = (googleUser) => {
-        const userKey = googleUser.getBasicProfile().GS;
-        const name = googleUser.getBasicProfile().mU; 
-        console.log(userKey, name);
+        console.log("default in");
+        const userKey = googleUser.getBasicProfile().fT;
+        const name = googleUser.getBasicProfile().uU; 
+        const pfp = googleUser.getBasicProfile().PJ; 
+        
+        console.log("damn", Object.keys(googleUser.getBasicProfile())); 
+        console.log(googleUser.getBasicProfile());
+        console.log(userKey, name, "yeet");
         get(child(ref(database), "users/" + userKey)).then(function(snapshot) {
             if (snapshot.val() === null) {
                 set(ref(database, "users/" + userKey), [0]);
-                eventDispatcher("authenticated", {name : name, id: userKey, items: [0]});  
+                eventDispatcher("authenticated", {name : name, id: userKey, items: [0], pfplink: pfp});  
             }
 
             else {
                 console.log("this value exists thank you"); 
                 console.log(snapshot.val()); 
-                eventDispatcher("authenticated", {name : name, id: userKey, items: snapshot.val()});
+                eventDispatcher("authenticated", {name : name, id: userKey, items: snapshot.val(), pfplink: pfp});
             }
 
         });
@@ -30,7 +44,6 @@
         auth2.signOut().then(function () {
             console.log('User signed out.');
         });
-        
     }    
     
 </script>
@@ -40,7 +53,12 @@
     <script src= "https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
-<div class = "container"> 
+
+{#if inFirst2}
+    <Loading></Loading>
+{/if}
+
+<div class = "container" class:invisible={inFirst2}> 
     <div class = "title"> 
         <h1> Sign into Around </h1> 
     </div>
@@ -58,7 +76,6 @@
     </div> 
 </div>
 
-
 <style> 
     .container {
         display: grid; 
@@ -67,6 +84,10 @@
         justify-content: center; 
         grid-template-rows: 80px 80px 80px 80px; ; 
         grid-template-areas: "title" "description" "signin" "signout"; 
+    }
+
+    .invisible {
+        display: none; 
     }
 
     .title {
