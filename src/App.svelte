@@ -88,7 +88,7 @@
 				<p id = "sign-out-text"> Sign Out </p>
 			</div>
 
-			<h1> {NAME}'s <span id = "around"> Around </span> </h1>	
+			<h1 id = "title"> {NAME}'s <span id = "around"> Around </span> </h1>	
 			<AddItem on:additem={addItem}/>
 			{#if ITEMS.length == 0} 
 				<p id = "none-there"> No HW Yet 😅😅</p>
@@ -106,6 +106,10 @@
 
 <style>
 
+
+	#title {
+		font-size: 10em;
+	}
 	.sign-out-section {
 		display: border-box; 
 		position: absolute; 
@@ -142,7 +146,7 @@
 	main {
 		text-align: center;
 		padding: 1em;
-		max-width: 240px;
+		max-width: 50vh;
 		margin: 0 auto;
 	}
 

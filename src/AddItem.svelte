@@ -134,8 +134,21 @@
 
 <style>
 
+    :root {
+        font-size: 1vh;
+    }
+
+    input, select, textarea{
+        height: 7rem;
+        font-size: 2rem;
+    }
+
+    textarea {
+        min-width: 15vw !important;
+    }
+
     .normal-width-name {
-        width: 200px; 
+        width: 20rem; 
     }
 
     #inputName::placeholder, #inputTime::placeholder, #inputDueDate::placeholder, #descTextArea::placeholder, #inputPoints::placeholder {
@@ -144,11 +157,11 @@
     }
 
     .adjust-width {
-        width: 300px; 
+        width: 40rem; 
     }
 
     .width-adjuster {
-        width: 220px; 
+        width: 30rem; 
     }
 
     .dels {
@@ -158,9 +171,12 @@
     }
 
     #submit-button {
-        border-radius: 10px; 
+        border-radius: 2rem; 
         transition: all 0.2s ease-in-out;
-        background: pink; 
+        background: pink;
+        font-size: 3vh;
+        width: 20vh;
+
     }
 
     #submit-button:hover {

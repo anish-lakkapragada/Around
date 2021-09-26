@@ -1,5 +1,4 @@
 * {
-	background-color: honeydew; 
 }
 
 textarea:focus, input:focus {
@@ -7,6 +6,7 @@ textarea:focus, input:focus {
 }
 
 html, body {
+	background-color: honeydew;
 	position: relative;
 	width: 100%;
 	height: 100%;

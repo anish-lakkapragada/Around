@@ -100,9 +100,23 @@
 <style> 
     #name, #trash {display: inline-block; }
     
-    #trash {
-        margin: 20px;
+    #name {
+        font-size: 2vw; 
     }
+
+    #trash {
+        font-size: 1.5vw;
+        margin-left: 1vw; 
+        cursor: pointer; 
+        border-radius: 20%;  
+        transition: all 0.2s ease-in-out;
+    }
+
+    #trash:hover {
+        background-color: rgb(253, 117, 117); 
+    }
+
+
     h1 {
         color: rgb(60, 0, 255); 
     }
@@ -112,44 +126,36 @@
         align-items: center; 
         justify-content: center; 
         display: grid;
-        grid-auto-columns: 200px 100px 200px 100px;
-        grid-template-rows: 40px 40px;
+        grid-auto-columns: 20vw 15vw 15vw 15vw;
+        grid-template-rows: 10vh 10vh;
         grid-template-areas: 
             "dueDate time tus points"
             "description description description description";
     }
 
-
-    /*
-
-      #unit-selector{
-        width: 200px; 
-        }
-    */
-
-    .name {
-        grid-area: name;
-    }
-
     .dueDate {
         grid-area: dueDate;
+        font-size: 1.5vw; 
     }
 
     .time {
         grid-area: time;
+        font-size: 2vw; 
     }
 
     .time-unit-selector {
         grid-area: tus;
+        font-size: 1.5vw; 
     }
 
     .points {
         grid-area: points;
-
+        font-size: 1.5vw; 
     }
 
     .description {
-        grid-area: description; 
+        grid-area: description;
+        font-size: 2vw; 
     }
 
     .edit-info {

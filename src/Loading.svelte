@@ -77,7 +77,7 @@
 
     .circle {
         &-html {
-            animation: anim_circle-html 0.5s ease-in-out forwards;
+            animation: anim_circle-html 0.6s ease-in-out forwards;
         }
         
     }

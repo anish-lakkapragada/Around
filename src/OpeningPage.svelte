@@ -4,7 +4,7 @@
     import {ref, set, child, get} from "firebase/database"; 
     import {createEventDispatcher} from "svelte";   
     import Loading from "./Loading.svelte";
-    
+
     let inFirst2 = true; 
 
     setTimeout(() => {
@@ -38,43 +38,91 @@
 
         });
     }
-
-    function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-            console.log('User signed out.');
-        });
-    }    
     
 </script>
 
-<head>
-    <meta name="google-signin-client_id" content = "226901785403-n6l4602spok3ch7983t2a9muu4i96ffn.apps.googleusercontent.com"> 
-    <script src= "https://apis.google.com/js/platform.js" async defer></script>
-</head>
+
+<html lang="en"> 
+    <head>
+        <meta name="google-signin-client_id" content = "226901785403-n6l4602spok3ch7983t2a9muu4i96ffn.apps.googleusercontent.com"> 
+    </head>
+        {#if inFirst2}
+            <Loading></Loading>
+        {/if}
+
+        <div class = "title" class:invisible={inFirst2}>
+            <h1> Sign into Around </h1> 
+        </div>
+
+        <div class = "description" class:invisible={inFirst2}> 
+            <h3> A fun app to manage your crazy life! </h3> 
+        </div>
+    
+    <body>
+        <div class = "signin" id="my-signin2" class:invisible={inFirst2}></div>
+
+        <script>
+            
+          function onSuccess(googleUser) {
+            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+          }
+
+          function onFailure(error) {
+            console.log(error);
+          }           
+
+          function renderButton() {
+            console.log('we running this cude', document.documentElement.clientHeight);
+
+            const PERC_WIDTH = 0.3; 
+            const PERC_HEIGHT = 0.1;
 
 
-{#if inFirst2}
-    <Loading></Loading>
-{/if}
+            console.log(document.documentElement.clientWidth, document.documentElement.clientHeight);
+            const WIDTH = document.documentElement.clientWidth * PERC_WIDTH;     
+            const HEIGHT = document.documentElement.clientHeight * PERC_HEIGHT;
 
-<div class = "container" class:invisible={inFirst2}> 
-    <div class = "title"> 
-        <h1> Sign into Around </h1> 
-    </div>
+            try {
+                gapi.signin2.render("my-signin2", {
+                'scope': 'profile email',
+                'width': WIDTH,
+                'height': HEIGHT,
+                'longtitle': false,
+                'theme': 'dark',
+                'onsuccess': onSignIn,
+                'onfailure': onFailure
+                });
+            } 
 
-    <div class = "description"> 
-        <h3> A fun app to manage your crazy life! </h3> 
-    </div>
+            catch (err) {
+                console.log(err);
+            }
+          }
 
-    <div class = "signin"> 
-        <div class="g-signin2" data-onsuccess="onSignIn" />
-    </div> 
+          let currentHeight = null;
+          let currentWidth = null;
 
-    <div class = "signout"> 
-        <button id = "signoutButton" on:click={signOut}>Sign out</button>
-    </div> 
-</div>
+          setInterval(() => {
+            let needToRender = false; 
+            if (document.documentElement.clientHeight != currentHeight) {
+                currentHeight = document.documentElement.clientHeight;
+                needToRender = true;
+            }
+
+            if (document.documentElement.clientWidth != currentWidth) {
+                currentWidth = document.documentElement.clientWidth;
+                needToRender = true;
+            } 
+
+            if (needToRender) {renderButton();}
+          }, 500); 
+
+        </script>
+    
+        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    </body>
+</html>
+
 
 <style> 
     .container {
@@ -82,46 +130,32 @@
         text-align: center; 
         align-items: center; 
         justify-content: center; 
-        grid-template-rows: 80px 80px 80px 80px; ; 
+        grid-template-rows: auto;
         grid-template-areas: "title" "description" "signin" "signout"; 
     }
 
     .invisible {
         display: none; 
+    }   
+
+    :root {
+        font-size: 1vh; 
     }
 
     .title {
         grid-area: title;
+        font-size: 7rem;
+    }
+
+    .signin {
+        margin-top: 3rem; 
+        margin-left: 7rem;
     }
 
     .description {
         grid-area: description;
-        font-size: 15px; 
+        font-size: 5rem; 
         font-style: italic; 
-    }
-
-    .signin {
-        grid-area : signin; 
-    }
-
-    .signin {
-        grid-area: signin;
-        margin-left: 80px; 
-    }
-
-    .signout {
-        grid-area: signout;
-    }
-
-    #signoutButton {
-        border-radius: 10px; 
-        transition: all 0.2s ease-in-out;
-        background: pink; 
-    }
-
-    #signoutButton:hover {
-        cursor: pointer; 
-        background: rgb(255, 77, 106);
     }
 
 </style> 
