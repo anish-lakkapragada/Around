@@ -70,7 +70,7 @@
     <div class = "grid-container">
 
         <div class = "dueDate"> 
-            <h3> Due Date: <span contenteditable = "true" on:blur={updateAll} class = "edit-info" bind:textContent={dueDate}> {dueDate} </span> </h3>
+            <h3> Due Date: <span on:blur={updateAll} contenteditable = "true" class = "edit-info" bind:textContent={dueDate}> {dueDate} </span> </h3>
         </div>
         
         <div class = "time"> 
@@ -100,9 +100,23 @@
 <style> 
     #name, #trash {display: inline-block; }
     
-    #trash {
-        margin: 20px;
+    #name {
+        font-size: 3rem; 
     }
+
+    #trash {
+        font-size: 1.5rem;
+        margin-left: 1rem; 
+        cursor: pointer; 
+        border-radius: 20%;  
+        transition: all 0.2s ease-in-out;
+    }
+
+    #trash:hover {
+        background-color: rgb(253, 117, 117); 
+    }
+
+
     h1 {
         color: rgb(60, 0, 255); 
     }
@@ -112,44 +126,36 @@
         align-items: center; 
         justify-content: center; 
         display: grid;
-        grid-auto-columns: 200px 100px 200px 100px;
-        grid-template-rows: 40px 40px;
+        grid-auto-columns: 10rem 15rem 15rem 15rem;
+        grid-template-rows: 5rem 5rem;
         grid-template-areas: 
             "dueDate time tus points"
             "description description description description";
     }
 
-
-    /*
-
-      #unit-selector{
-        width: 200px; 
-        }
-    */
-
-    .name {
-        grid-area: name;
-    }
-
     .dueDate {
         grid-area: dueDate;
+        font-size: 1.5rem; 
     }
 
     .time {
         grid-area: time;
+        font-size: 2rem; 
     }
 
     .time-unit-selector {
         grid-area: tus;
+        font-size: 1.5rem; 
     }
 
     .points {
         grid-area: points;
-
+        font-size: 1.5rem; 
     }
 
     .description {
-        grid-area: description; 
+        grid-area: description;
+        font-size: 2rem; 
     }
 
     .edit-info {

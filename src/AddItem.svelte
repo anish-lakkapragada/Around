@@ -103,11 +103,12 @@
 
 </script> 
 <main>
+    <h3 id="add-item-banner"> Add Items Below! </h3>
     <form on:submit={onSubmit} class = "grid-3">
         <input bind:this={inputName} id = "inputName" class:normal-width-name={normalWidthName} type="text" placeholder="Name" bind:value={item.name}/>
         <input bind:this={inputTime} id = "inputTime" class:adjust-width={errorTime} type="number" placeholder="Time Needed" bind:value={item.time}/>
         <select name="units" bind:value={item.timeUnits}>
-            <option selected = "selected" value="minutes">Minutes</option>
+            <option selected = "true" value="minutes">Minutes</option>
             <option value="hours">Hours</option>
             <option value="seconds"> Seconds</option>
             <option value="days"> Days (for Calc HW) </option>
@@ -132,10 +133,27 @@
     </script>
 </main>
 
-<style>
+<style type="text/scss">
+
+    
+    
+    #add-item-banner {
+        font-size: 3rem;
+    }
+
+    input, textarea{
+        height: 4rem;
+        font-size: 2rem;
+    }
+
+    select {height: 4rem; font-size: 2rem;}
+
+    textarea {
+        min-width: 10rem; 
+    }
 
     .normal-width-name {
-        width: 200px; 
+        width: 20rem; 
     }
 
     #inputName::placeholder, #inputTime::placeholder, #inputDueDate::placeholder, #descTextArea::placeholder, #inputPoints::placeholder {
@@ -144,11 +162,11 @@
     }
 
     .adjust-width {
-        width: 300px; 
+        width: 40rem; 
     }
 
     .width-adjuster {
-        width: 220px; 
+        width: 30rem; 
     }
 
     .dels {
@@ -158,13 +176,14 @@
     }
 
     #submit-button {
-        border-radius: 10px; 
         transition: all 0.2s ease-in-out;
-        background: pink; 
+        background: pink;
+        border-radius: 0.75rem;
     }
 
     #submit-button:hover {
         cursor: pointer; 
         background: rgb(255, 77, 106);
     }
+
 </style>
