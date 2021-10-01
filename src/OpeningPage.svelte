@@ -51,7 +51,7 @@
         {/if}
 
         <div class = "title" class:invisible={inFirst2}>
-            <h1> Sign into Around </h1> 
+            <h1> Sign into <span id="around"> Around </span> </h1> 
         </div>
 
         <div class = "description" class:invisible={inFirst2}> 
@@ -125,6 +125,14 @@
 
 
 <style> 
+
+    #around {
+		background: linear-gradient(45deg, rgb(132, 0, 255), rgb(255, 0, 98));
+		-webkit-background-clip: text;
+  		-webkit-text-fill-color: transparent;
+	}
+
+
     .container {
         display: grid; 
         text-align: center; 
@@ -137,14 +145,9 @@
     .invisible {
         display: none; 
     }   
-
-    :root {
-        font-size: 1vh; 
-    }
-
     .title {
         grid-area: title;
-        font-size: 7rem;
+        font-size: 3rem;
     }
 
     .signin {
@@ -152,9 +155,13 @@
         margin-left: 7rem;
     }
 
+    #my-signin2 {
+        margin-left: 35vw; 
+    }
+
     .description {
         grid-area: description;
-        font-size: 5rem; 
+        font-size: 2rem; 
         font-style: italic; 
     }
 

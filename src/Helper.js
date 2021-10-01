@@ -24,4 +24,23 @@ const validateDate = (date) => {
     
 }
 
-export {validateDate, resizeForPlaceholder}
+const convertUnits = (timeNeeded, units) => {
+    if (units === "minutes") {
+        return timeNeeded; 
+    }
+
+    if (units === "hours") {
+        return timeNeeded * 60; 
+    }
+
+    if (units === 'seconds') {
+        return timeNeeded / 60; 
+    }
+
+    if (units === "Days (for Calc HW)") {
+        return timeNeeded * 60 * 24; 
+    }
+
+}
+
+export {validateDate, resizeForPlaceholder, convertUnits};
