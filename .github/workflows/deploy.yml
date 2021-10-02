@@ -24,11 +24,8 @@ jobs:
         run: npm ci
 
       - name: Build 
-        run: npm run build
+        run: API_KEY = ${{secrets.API_KEY}} npm run build
 
-      - name: Deploy
-        env:
-            API_KEY: ${ secrets.API_KEY }
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
