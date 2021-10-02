@@ -5,27 +5,7 @@ const resizeForPlaceholder = (input) => {
     input.setAttribute("size", input.getAttribute("placeholder").length + 2); 
 
 }
-
-const validateDate = (date) => {
-    if (typeof(date) !== "string") {return false;}
-
-    if (date.charAt(0) !== "0" && date.charAt(1) === "/") {
-        date = "0" + date; 
-    }
-
-    console.log(`this is date ${date}`);
-
-    if (!moment(date, "MM/DD/YY", true).isValid() && !moment(date, "MM/DD/YYYY", true).isValid() && !moment(date, "MM/D/YY", true).isValid() && !moment(date, "MM/D/YYYY", true).isValid()) {
-        console.log(`invalid date:`); console.log(date);
-        return false;  
-    }
-
-    return true; 
-    
-}
-
 const convertUnits = (timeNeeded, units) => {
-    console.log("inside, we got: ", timeNeeded, units);
 
     if (units === "minutes") {
         return timeNeeded; 
@@ -45,4 +25,11 @@ const convertUnits = (timeNeeded, units) => {
 
 }
 
-export {validateDate, resizeForPlaceholder, convertUnits};
+const getFormattedDate = (date) => {
+	const year = date.getFullYear();
+	const month = (1 + date.getMonth()).toString().padStart(2, '0');
+	const day = date.getDate().toString().padStart(2, '0');
+	return `${year}-${month}-${day}`;
+}
+
+export {resizeForPlaceholder, convertUnits, getFormattedDate};

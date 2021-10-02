@@ -1,10 +1,9 @@
 <script>
 
-import AddItem from "./AddItem.svelte"; 
-	import Item from "./Item.svelte"; 
+	import AddItem from "./AddItem.svelte"; 
 	import OpeningPage from "./OpeningPage.svelte"; 
 
-	import {convertUnits} from "./Helper.js";
+	import {convertUnits, getFormattedDate} from "./Helper.js";
 	import {database} from "./firebaseLoad";
 	import {getDatabase, ref, set, child} from "firebase/database";
 
@@ -17,27 +16,15 @@ import AddItem from "./AddItem.svelte";
 	let sortSelection = "dueDate";
 
 	$: sortSelection, sortItems(); // sort Items whenever this value changes. 
-	$: ITEMS, console.log("yeah you changed it to ", ITEMS);  
 
-	/**
-	 * 
-	 * my problem is that svelte is recoogniing that an object is changing but is 
-	 * deciding to do nothing about the fact that it is changig. and it's not rerending
-	 * the compoentn that uses it with an {#each block of code}. i don;t 
-	*/
 	const sortItems = () => {
 		// use value of sortSelection to sort the ITEMS array 
 
-		//console.log("I was asked to sort humanity.");
-
 		if (sortSelection === "dueDate") {
-			//console.log("sorting by due date");
 			
 			ITEMS = ITEMS.sort((a, b) => {
 				return new Date(a.dueDate) - new Date(b.dueDate);
 			});
-
-			console.log("after sorting we get, ", ITEMS);
 		}
 
 		else if (sortSelection === "points") {
@@ -55,9 +42,6 @@ import AddItem from "./AddItem.svelte";
 
 		else if (sortSelection === "time") {
 			ITEMS = ITEMS.sort((a, b) => {
-				console.log('we converting');
-				console.log(convertUnits(b.timeNeeded, b.timeUnits)); 
-				console.log(convertUnits(a.timeNeeded, a.timeUnits));
 				return convertUnits(b.time, b.timeUnits) - convertUnits(a.time, a.timeUnits);
 			}); 
 		}
@@ -68,35 +52,51 @@ import AddItem from "./AddItem.svelte";
 
 	const onAuthenticated = (event) => {
 		const {name, items, id, pfplink} = event.detail;
-		console.log(event.detail, "del");
 		NAME = name; 
 		ID = id; 
 		PFPLINK = pfplink;
-		console.log(`this is link, ${PFPLINK}, ${typeof(PFPLINK)}`);
 
 		AUTHENTICATED = true;
-
-		console.log("damn", PFPLINK);
-		console.log("items are: ", items);
+		
 		if (JSON.stringify(items) === JSON.stringify([0])) {ITEMS = [];}
-		else {ITEMS = items;}
+		
+		else {
+			ITEMS = items;
+			if (ITEMS[0].sortSelection == null) {
+				for (let i = 0 ; i < ITEMS.length; i++) {
+					ITEMS[i].sortSelection = "dueDate";
+				}
+			}
 
-		console.log("ITEMS ARE :", ITEMS);
+			else {
+				sortSelection = ITEMS[0].sortSelection;
+			}
+
+			set(ref(database, "users/" + ID), ITEMS);
+		}
 	}
 	
 
 	const addItem = (event) => {
 		const receivedItem = event.detail; 
 		ITEMS = [...ITEMS, receivedItem];
+;
 		
-		console.log(ITEMS);
+		for (let i =0; i < ITEMS.length; i++) {
+			ITEMS[i].sortSelection = sortSelection;
+		}
+
+		ITEMS = ITEMS; 
+
+		sortItems(); 
+		
 		set(ref(database, "users/" + ID), ITEMS); 
+
 	}
 
 	const onDelete = (event) => {
 		// TODO work on delete function with firebase
 		const number = event.detail.number - 1; // minus one for index 
-		console.log(number); 
 		ITEMS = ITEMS.filter((item, index) => {return index != number}); 
 
 		let firebaseItems = null; 
@@ -107,15 +107,21 @@ import AddItem from "./AddItem.svelte";
 	function signOut() {
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
-            console.log('User signed out.');
 			AUTHENTICATED =false;
 		});
     } 
 	
 	const del = (i) => {
-		console.log('in here deleting stuff');
 		ITEMS = ITEMS.filter((item, index) => {return index != i});
 		ITEMS = ITEMS; 
+
+		set(ref(database, "users/" + ID), ITEMS);
+	}
+
+	const updateSortSelection = () => {
+		for (let i = 0 ; i < ITEMS.length; i++) {
+			ITEMS[i].sortSelection = sortSelection;
+		}
 
 		set(ref(database, "users/" + ID), ITEMS);
 	}
@@ -142,7 +148,7 @@ import AddItem from "./AddItem.svelte";
 			{:else}
 
 				<h2 id = "sort-text"> Sort HW By: </h2>	
-				<select id="sort-selector" name="sortBy" bind:value={sortSelection}> 
+				<select id="sort-selector" name="sortBy" bind:value={sortSelection} on:change={updateSortSelection}> 
 					<option selected="true" value="dueDate">Due Date</option>
 					<option value="points"> Points</option>
 					<option value="time"> Time Needed </option>	
@@ -153,12 +159,12 @@ import AddItem from "./AddItem.svelte";
 
 				{#each ITEMS as item, i} 
 
-					<h1 id = "name"> <span> {i + 1 + "."} </span> <span contenteditable = "true" class = "edit-info" bind:textContent={item.name}> {item.name} </span> </h1>
+					<h1 id = "name"> <span> {i + 1 + "."} </span> <span contenteditable = "true" class = "edit-info" on:blur={sortItems} bind:textContent={item.name}> {item.name} </span> </h1>
 					<button  on:click={() => {del(i);}} id = "trash"  type="button">Delete</button>
 					<div class = "grid-container">
 
 						<div class = "dueDate"> 
-							<h3> Due Date: <span contenteditable="true" class="edit-info" on:blur={sortItems} bind:textContent={item.dueDate}> {item.dueDate} </span></h3>
+							<h3 id = "iDH"> Due Date: <input type="date" class="edit-info" id="iDD" on:blur={sortItems} bind:value={item.dueDate}> </h3>
 						</div>
 						
 						<div class = "time"> 
@@ -197,7 +203,6 @@ import AddItem from "./AddItem.svelte";
     #name {
         font-size: 3rem; 
     }
-
     #trash {
         font-size: 1.5rem;
         margin-left: 1rem; 
@@ -210,7 +215,6 @@ import AddItem from "./AddItem.svelte";
         background-color: rgb(253, 117, 117); 
     }
 
-
     h1 {
         color: rgb(60, 0, 255); 
     }
@@ -220,12 +224,16 @@ import AddItem from "./AddItem.svelte";
         align-items: center; 
         justify-content: center; 
         display: grid;
-        grid-auto-columns: 10rem 15rem 15rem 15rem;
+        grid-auto-columns: 20rem 15rem 15rem 15rem;
         grid-template-rows: 5rem 5rem;
         grid-template-areas: 
             "dueDate time tus points"
             "description description description description";
     }
+
+	#iDH, #iDD {
+		display: inline-block;
+	}
 
     .dueDate {
         grid-area: dueDate;

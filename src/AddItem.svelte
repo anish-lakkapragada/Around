@@ -2,7 +2,7 @@
 
     import {createEventDispatcher} from 'svelte';
     import {resizeForPlaceholder} from "./Helper.js"; 
-    import {validateDate} from "./Helper.js"
+    import {getFormattedDate} from "./Helper.js";
 
     let adjustDDWidth = true; // disable this when there is an error 
     let errorTime = false; // used to turn on classes to adjust, only add this when there is an error 
@@ -14,7 +14,7 @@
         time: "", 
         timeUnits: "minutes", 
         description: "", 
-        dueDate: "", 
+        dueDate: getFormattedDate(new Date()), 
         points: null // optional 
     }
 
@@ -72,7 +72,7 @@
             inputDesc.style.setProperty("--opacity", 1.0);
         }
 
-        if (dueDate === "" || !validateDate(dueDate)) {
+        if (dueDate === "") {
             WORKS = false;
             adjustDDWidth = false; 
             inputDueDate.value = "";
@@ -115,7 +115,7 @@
         </select>
         <div class = "dels"> 
             <textarea bind:this={inputDesc} id="descTextArea" name="description" placeholder="Description" bind:value={item.description}/>
-            <input bind:this={inputDueDate} class:width-adjuster={adjustDDWidth} type="text" id ="inputDueDate" placeholder="Due Date (e.x. 2/3/2021)" bind:value={item.dueDate}/>
+            <input bind:this={inputDueDate} class:width-adjuster={adjustDDWidth} type="date" id ="inputDueDate" placeholder={getFormattedDate(new Date())} bind:value={item.dueDate}/>
             <input bind:this={inputPoints} type="number" id = "inputPoints" placeholder="Points (optional)" bind:value={item.points}/>
         </div> 
         <input id = "submit-button" type="submit" placeholder = "Enter" >

@@ -9,21 +9,16 @@
 
     setTimeout(() => {
         // if we're still in here, make everything visible 
-        console.log("dank");
         inFirst2 = false;
     }, 800); 
 
     const eventDispatcher = createEventDispatcher(); 
 
     window.onSignIn = (googleUser) => {
-        console.log("default in");
         const userKey = googleUser.getBasicProfile().fT;
         const name = googleUser.getBasicProfile().uU; 
         const pfp = googleUser.getBasicProfile().PJ; 
-        
-        console.log("damn", Object.keys(googleUser.getBasicProfile())); 
-        console.log(googleUser.getBasicProfile());
-        console.log(userKey, name, "yeet");
+;
         get(child(ref(database), "users/" + userKey)).then(function(snapshot) {
             if (snapshot.val() === null) {
                 set(ref(database, "users/" + userKey), [0]);
@@ -31,8 +26,6 @@
             }
 
             else {
-                console.log("this value exists thank you"); 
-                console.log(snapshot.val()); 
                 eventDispatcher("authenticated", {name : name, id: userKey, items: snapshot.val(), pfplink: pfp});
             }
 
@@ -64,7 +57,6 @@
         <script>
             
           function onSuccess(googleUser) {
-            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
           }
 
           function onFailure(error) {
@@ -72,13 +64,10 @@
           }           
 
           function renderButton() {
-            console.log('we running this cude', document.documentElement.clientHeight);
 
             const PERC_WIDTH = 0.3; 
             const PERC_HEIGHT = 0.1;
 
-
-            console.log(document.documentElement.clientWidth, document.documentElement.clientHeight);
             const WIDTH = document.documentElement.clientWidth * PERC_WIDTH;     
             const HEIGHT = document.documentElement.clientHeight * PERC_HEIGHT;
 
