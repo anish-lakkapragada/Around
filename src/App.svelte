@@ -89,7 +89,7 @@
 		ITEMS = ITEMS; 
 
 		sortItems(); 
-		
+
 		set(ref(database, "users/" + ID), ITEMS); 
 
 	}
@@ -201,10 +201,10 @@
 	#name, #trash {display: inline-block; }
     
     #name {
-        font-size: 3rem; 
+        font-size: 2rem; 
     }
     #trash {
-        font-size: 1.5rem;
+        font-size: 1rem;
         margin-left: 1rem; 
         cursor: pointer; 
         border-radius: 20%;  
@@ -224,7 +224,7 @@
         align-items: center; 
         justify-content: center; 
         display: grid;
-        grid-auto-columns: 20rem 15rem 15rem 15rem;
+        grid-auto-columns: 20rem 7rem 7rem 15rem;
         grid-template-rows: 5rem 5rem;
         grid-template-areas: 
             "dueDate time tus points"
@@ -237,27 +237,27 @@
 
     .dueDate {
         grid-area: dueDate;
-        font-size: 1.5rem; 
+        font-size: 1rem; 
     }
 
     .time {
         grid-area: time;
-        font-size: 2rem; 
+        font-size: 1rem; 
     }
 
     .time-unit-selector {
         grid-area: tus;
-        font-size: 1.5rem; 
+        font-size: 1rem; 
     }
 
     .points {
         grid-area: points;
-        font-size: 1.5rem; 
+        font-size: 1rem; 
     }
 
     .description {
         grid-area: description;
-        font-size: 2rem; 
+        font-size: 1.5rem; 
     }
 
     .edit-info {
@@ -276,15 +276,15 @@
 	}
 
 	#sort-text {
-		font-size: 3rem; 
+		font-size: 1.5rem; 
 	}
 
 	#sort-selector {
-		font-size: 2rem; 
+		font-size: 1.5rem; 
 	}
 
 	#title {
-		font-size: 5rem;
+		font-size: 3rem;
 		
 	}
 

@@ -138,15 +138,15 @@
     
     
     #add-item-banner {
-        font-size: 3rem;
-    }
-
-    input, textarea{
-        height: 4rem;
         font-size: 2rem;
     }
 
-    select {height: 4rem; font-size: 2rem;}
+    input, textarea{
+        height: 2rem;
+        font-size: 1rem;
+    }
+
+    select {height: 2rem; font-size: 1rem;}
 
     textarea {
         min-width: 10rem; 
