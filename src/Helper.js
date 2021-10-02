@@ -25,6 +25,8 @@ const validateDate = (date) => {
 }
 
 const convertUnits = (timeNeeded, units) => {
+    console.log("inside, we got: ", timeNeeded, units);
+
     if (units === "minutes") {
         return timeNeeded; 
     }
@@ -33,11 +35,11 @@ const convertUnits = (timeNeeded, units) => {
         return timeNeeded * 60; 
     }
 
-    if (units === 'seconds') {
+    if (units === "seconds") {
         return timeNeeded / 60; 
     }
 
-    if (units === "Days (for Calc HW)") {
+    if (units === "days") {
         return timeNeeded * 60 * 24; 
     }
 

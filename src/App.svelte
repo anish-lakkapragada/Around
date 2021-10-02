@@ -12,65 +12,58 @@ import AddItem from "./AddItem.svelte";
 	// authentication... 
 	let AUTHENTICATED = false; 
 	let NAME; let ID; 
-	let ITEMS = null;
+	let ITEMS = [];
 	let PFPLINK;
-	let sortSelection; 
+	let sortSelection = "dueDate";
 
-	$: sortSelection, sortItems(ITEMS);
-	$: ITEMS, console.log('dank we changed to ', ITEMS);
+	$: sortSelection, sortItems(); // sort Items whenever this value changes. 
+	$: ITEMS, console.log("yeah you changed it to ", ITEMS);  
 
+	/**
+	 * 
+	 * my problem is that svelte is recoogniing that an object is changing but is 
+	 * deciding to do nothing about the fact that it is changig. and it's not rerending
+	 * the compoentn that uses it with an {#each block of code}. i don;t 
+	*/
 	const sortItems = () => {
 		// use value of sortSelection to sort the ITEMS array 
 
-		console.log("sort again");
+		//console.log("I was asked to sort humanity.");
+
 		if (sortSelection === "dueDate") {
-			if (ITEMS != null) {
-				console.log(ITEMS);
-				
-				// sort based on due date
-				ITEMS.sort((a, b) => {
-					return (new Date(a.dueDate) - new Date(b.dueDate));
-				});
+			//console.log("sorting by due date");
+			
+			ITEMS = ITEMS.sort((a, b) => {
+				return new Date(a.dueDate) - new Date(b.dueDate);
+			});
 
-				ITEMS = [...ITEMS]; // should force reactivity 
-
-				set(ref(database, "users/" + ID), ITEMS); 
-				console.log("these are the new ITEMS ", ITEMS); 
-			}
+			console.log("after sorting we get, ", ITEMS);
 		}
 
 		else if (sortSelection === "points") {
-			if (ITEMS != null) {
-				ITEMS.sort(function (points1, points2) {
-					return points2.points - points1.points;
-				});
-
-				ITEMS = ITEMS;
-				console.log("Changed puntos, ", ITEMS);
-			}
+			ITEMS = ITEMS.sort((a, b) => {
+				return b.points - a.points;
+			});
 		}
 
 		else if (sortSelection === "name") {
-			if (ITEMS != null) {
-				ITEMS.sort(function (name1, name2) {
-					return name1.name.localeCompare(name2.name);
-				});
+			ITEMS = ITEMS.sort((a, b) => {
+				return a.name.localeCompare(b.name);
+			});
 
-				ITEMS = ITEMS;
-			}
 		}
 
 		else if (sortSelection === "time") {
-			if (ITEMS != null) {
-				ITEMS.sort(function (hw1, hw2) {
-					time1 = convertUnits(hw1.time, hw1.timeUnits); 
-					time2 = convertUnits(hw2.time, hw2.timeUnits);
-					return time2 - time1;
-				});
-
-				ITEMS = ITEMS; 
-			}
+			ITEMS = ITEMS.sort((a, b) => {
+				console.log('we converting');
+				console.log(convertUnits(b.timeNeeded, b.timeUnits)); 
+				console.log(convertUnits(a.timeNeeded, a.timeUnits));
+				return convertUnits(b.time, b.timeUnits) - convertUnits(a.time, a.timeUnits);
+			}); 
 		}
+
+		set(ref(database, "users/" + ID), ITEMS);
+
 	}
 
 	const onAuthenticated = (event) => {
@@ -100,18 +93,6 @@ import AddItem from "./AddItem.svelte";
 		set(ref(database, "users/" + ID), ITEMS); 
 	}
 
-	const update = (event) => {
-		
-		console.log("update", event.detail);
-		const receivedItem = event.detail;
-		const number = receivedItem.number;
-		const changing = receivedItem.changing; 
-		ITEMS[number - 1][changing] = receivedItem.newValue;
-
-		// overhere now store into firebase 
-		set(ref(database, "users/" + ID), ITEMS); 
-	}
-
 	const onDelete = (event) => {
 		// TODO work on delete function with firebase
 		const number = event.detail.number - 1; // minus one for index 
@@ -130,6 +111,14 @@ import AddItem from "./AddItem.svelte";
 			AUTHENTICATED =false;
 		});
     } 
+	
+	const del = (i) => {
+		console.log('in here deleting stuff');
+		ITEMS = ITEMS.filter((item, index) => {return index != i});
+		ITEMS = ITEMS; 
+
+		set(ref(database, "users/" + ID), ITEMS);
+	}
 
 </script>
 
@@ -160,8 +149,39 @@ import AddItem from "./AddItem.svelte";
 					<option value="name"> Name </option>
 				</select>
 
-				{#each ITEMS as item, i}  	
-					<Item number = {i + 1} NAME={item.name} TIME = {item.time} TIMEUNITS = {item.timeUnits} DESCRIPTION = {item.description} DUEDATE = {item.dueDate} POINTS = {item.points} on:update={update} on:delete={onDelete}/>
+				<br> <br>
+
+				{#each ITEMS as item, i} 
+
+					<h1 id = "name"> <span> {i + 1 + "."} </span> <span contenteditable = "true" class = "edit-info" bind:textContent={item.name}> {item.name} </span> </h1>
+					<button  on:click={() => {del(i);}} id = "trash"  type="button">Delete</button>
+					<div class = "grid-container">
+
+						<div class = "dueDate"> 
+							<h3> Due Date: <span contenteditable="true" class="edit-info" on:blur={sortItems} bind:textContent={item.dueDate}> {item.dueDate} </span></h3>
+						</div>
+						
+						<div class = "time"> 
+							<h3> Time: <span  contenteditable = "true" class = "edit-info" on:blur={sortItems} bind:textContent={item.time}> {item.time} </span> </h3>
+						</div>
+
+						<div class = "time-unit-selector"> 
+							<select id = "unit-selector" name="units" bind:value={item.timeUnits} on:blur={sortItems}>
+								<option value="minutes">Minutes</option>
+								<option value="hours">Hours</option>
+								<option value="seconds"> Seconds</option>
+								<option value="days"> Days (for Calc HW) </option>
+							</select>
+						</div> 
+						
+						<div class="points">
+							<h3> Points: <span contenteditable = "true"  class = "edit-info" on:blur={sortItems} bind:textContent={item.points}> {item.points} </span></h3>
+						</div>  
+
+						<div class = "description">
+							<p> <em> <span contenteditable = "true" class = "edit-info" on:blur={sortItems} bind:textContent={item.description}> {item.description} </span> </em> </p>
+						</div>
+					</div> 
 				{/each}
 			{/if}
 		{:else}
@@ -171,6 +191,77 @@ import AddItem from "./AddItem.svelte";
 </main>	
 
 <style>
+
+	#name, #trash {display: inline-block; }
+    
+    #name {
+        font-size: 3rem; 
+    }
+
+    #trash {
+        font-size: 1.5rem;
+        margin-left: 1rem; 
+        cursor: pointer; 
+        border-radius: 20%;  
+        transition: all 0.2s ease-in-out;
+    }
+
+    #trash:hover {
+        background-color: rgb(253, 117, 117); 
+    }
+
+
+    h1 {
+        color: rgb(60, 0, 255); 
+    }
+
+    .grid-container {
+        text-align: center; 
+        align-items: center; 
+        justify-content: center; 
+        display: grid;
+        grid-auto-columns: 10rem 15rem 15rem 15rem;
+        grid-template-rows: 5rem 5rem;
+        grid-template-areas: 
+            "dueDate time tus points"
+            "description description description description";
+    }
+
+    .dueDate {
+        grid-area: dueDate;
+        font-size: 1.5rem; 
+    }
+
+    .time {
+        grid-area: time;
+        font-size: 2rem; 
+    }
+
+    .time-unit-selector {
+        grid-area: tus;
+        font-size: 1.5rem; 
+    }
+
+    .points {
+        grid-area: points;
+        font-size: 1.5rem; 
+    }
+
+    .description {
+        grid-area: description;
+        font-size: 2rem; 
+    }
+
+    .edit-info {
+        border: 1px solid rgb(202, 202, 202);
+		border-radius: 4px;
+    }
+
+    .edit-info:focus{
+        outline: none;
+        border: 2px solid rgb(148, 148, 148);
+    }
+
 
 	#sort-text, #sort-selector {
 		display: inline-block;

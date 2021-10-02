@@ -35,22 +35,30 @@
     const eventDispatcher = createEventDispatcher(); 
 
     function createMessage(changing, newValue) {
-        return {number:number, changing: changing, newValue: newValue};
+        return {changing: changing, newValue: newValue};
     }
 
     function updateAll() {
         // function to update when a single thing is changed on blur
+        let sending = {number: number, changes: []}; 
+        let updates = []; 
         for (const [changing, [changed, newValue]] of Object.entries(changingAttributes)) {
+            
             if (changed) {
-                console.log("sent message ", createMessage(changing, newValue));
-                eventDispatcher("update", createMessage(changing, newValue));
-                console.log('sent this message'); 
+                updates.push(createMessage(changing, newValue));
             }
         }
 
-        console.log("at the end", name); 
+        sending.changes = updates;
+        console.log("sending this: ", sending); 
+        eventDispatcher("update", sending); // only sends one event dispatcher. 
+
+        console.log("sent it from the event dispatcher in Item.svelte");
+        
         changeName = false; changeTime = false; changeTimeUnits = false; changeDescription = false; changeDueDate = false; changePoints = false;
-    
+        
+        // just send it in this form: 
+        // {number: NUMBER, changing: changing}
     }
 
     const del = () => {
@@ -70,7 +78,7 @@
     <div class = "grid-container">
 
         <div class = "dueDate"> 
-            <h3> Due Date: <span on:blur={updateAll} contenteditable = "true" class = "edit-info" bind:textContent={dueDate}> {dueDate} </span> </h3>
+            <h3> Due Date: <input on:blur={updateAll} class = "edit-info" bind:value={dueDate}> </h3>
         </div>
         
         <div class = "time"> 
