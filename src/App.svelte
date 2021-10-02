@@ -137,7 +137,7 @@
 	<div class="container">
 		{#if AUTHENTICATED}
 			<div class="sign-out-section"> 
-				<button id= "sign-out-button" style="background-image: url({PFPLINK}); background-repeat:no-repeat;" on:click={signOut}> </button>	
+				<button id= "sign-out-button" style="background-image: url({PFPLINK});" on:click={signOut}> </button>	
 				<p id = "sign-out-text"> Sign Out </p>
 			</div>
 
