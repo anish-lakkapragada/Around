@@ -22878,8 +22878,9 @@ var app = (function () {
 
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
     const firebaseConfig = {
-      apiKey: process.env.API_KEY,
+      apiKey: "AIzaSyAr_-oKV3ZIOxpcZGuMArNM4FdOhOycP2U",
       authDomain: "my-awesome-project-7e477.firebaseapp.com",
       databaseURL: "https://my-awesome-project-7e477-default-rtdb.firebaseio.com",
       projectId: "my-awesome-project-7e477",
