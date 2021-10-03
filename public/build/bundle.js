@@ -22879,7 +22879,7 @@ var app = (function () {
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
-      apiKey: "AIzaSyAr_-oKV3ZIOxpcZGuMArNM4FdOhOycP2U",
+      apiKey: process.env.API_KEY,
       authDomain: "my-awesome-project-7e477.firebaseapp.com",
       databaseURL: "https://my-awesome-project-7e477-default-rtdb.firebaseio.com",
       projectId: "my-awesome-project-7e477",
@@ -23392,20 +23392,19 @@ var app = (function () {
     			if_block_anchor = empty();
     			attr_dev(button, "id", "sign-out-button");
     			set_style(button, "background-image", "url(" + /*PFPLINK*/ ctx[4] + ")");
-    			set_style(button, "background-repeat", "no-repeat");
     			attr_dev(button, "class", "svelte-1604ox4");
     			add_location(button, file, 139, 4, 3137);
     			attr_dev(p, "id", "sign-out-text");
     			attr_dev(p, "class", "svelte-1604ox4");
-    			add_location(p, file, 140, 4, 3273);
+    			add_location(p, file, 140, 4, 3244);
     			attr_dev(div, "class", "sign-out-section svelte-1604ox4");
     			add_location(div, file, 138, 3, 3101);
     			attr_dev(span, "id", "around");
     			attr_dev(span, "class", "svelte-1604ox4");
-    			add_location(span, file, 143, 30, 3353);
+    			add_location(span, file, 143, 30, 3324);
     			attr_dev(h1, "id", "title");
     			attr_dev(h1, "class", "svelte-1604ox4");
-    			add_location(h1, file, 143, 3, 3326);
+    			add_location(h1, file, 143, 3, 3297);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -23534,27 +23533,27 @@ var app = (function () {
     			each_1_anchor = empty();
     			attr_dev(h2, "id", "sort-text");
     			attr_dev(h2, "class", "svelte-1604ox4");
-    			add_location(h2, file, 149, 4, 3543);
+    			add_location(h2, file, 149, 4, 3514);
     			option0.selected = "true";
     			option0.__value = "dueDate";
     			option0.value = option0.__value;
-    			add_location(option0, file, 151, 5, 3695);
+    			add_location(option0, file, 151, 5, 3666);
     			option1.__value = "points";
     			option1.value = option1.__value;
-    			add_location(option1, file, 152, 5, 3758);
+    			add_location(option1, file, 152, 5, 3729);
     			option2.__value = "time";
     			option2.value = option2.__value;
-    			add_location(option2, file, 153, 5, 3803);
+    			add_location(option2, file, 153, 5, 3774);
     			option3.__value = "name";
     			option3.value = option3.__value;
-    			add_location(option3, file, 154, 5, 3853);
+    			add_location(option3, file, 154, 5, 3824);
     			attr_dev(select, "id", "sort-selector");
     			attr_dev(select, "name", "sortBy");
     			attr_dev(select, "class", "svelte-1604ox4");
     			if (/*sortSelection*/ ctx[0] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[11].call(select));
-    			add_location(select, file, 150, 4, 3588);
-    			add_location(br0, file, 157, 4, 3909);
-    			add_location(br1, file, 157, 9, 3914);
+    			add_location(select, file, 150, 4, 3559);
+    			add_location(br0, file, 157, 4, 3880);
+    			add_location(br1, file, 157, 9, 3885);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h2, anchor);
@@ -23652,10 +23651,10 @@ var app = (function () {
     			p = element("p");
     			strong = element("strong");
     			strong.textContent = "No HW (Yet) 😅😅";
-    			add_location(strong, file, 146, 26, 3486);
+    			add_location(strong, file, 146, 26, 3457);
     			attr_dev(p, "id", "none-there");
     			attr_dev(p, "class", "svelte-1604ox4");
-    			add_location(p, file, 146, 4, 3464);
+    			add_location(p, file, 146, 4, 3435);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -23803,69 +23802,69 @@ var app = (function () {
     			span4 = element("span");
     			t19 = text(t19_value);
     			t20 = space();
-    			add_location(span0, file, 161, 22, 3973);
+    			add_location(span0, file, 161, 22, 3944);
     			attr_dev(span1, "contenteditable", "true");
     			attr_dev(span1, "class", "edit-info svelte-1604ox4");
     			if (/*item*/ ctx[21].name === void 0) add_render_callback(span1_input_handler);
-    			add_location(span1, file, 161, 51, 4002);
+    			add_location(span1, file, 161, 51, 3973);
     			attr_dev(h1, "id", "name");
     			attr_dev(h1, "class", "svelte-1604ox4");
-    			add_location(h1, file, 161, 5, 3956);
+    			add_location(h1, file, 161, 5, 3927);
     			attr_dev(button, "id", "trash");
     			attr_dev(button, "type", "button");
     			attr_dev(button, "class", "svelte-1604ox4");
-    			add_location(button, file, 162, 5, 4134);
+    			add_location(button, file, 162, 5, 4105);
     			attr_dev(input, "type", "date");
     			attr_dev(input, "class", "edit-info svelte-1604ox4");
     			attr_dev(input, "id", "iDD");
-    			add_location(input, file, 166, 33, 4315);
+    			add_location(input, file, 166, 33, 4286);
     			attr_dev(h30, "id", "iDH");
     			attr_dev(h30, "class", "svelte-1604ox4");
-    			add_location(h30, file, 166, 7, 4289);
+    			add_location(h30, file, 166, 7, 4260);
     			attr_dev(div0, "class", "dueDate svelte-1604ox4");
-    			add_location(div0, file, 165, 6, 4257);
+    			add_location(div0, file, 165, 6, 4228);
     			attr_dev(span2, "contenteditable", "true");
     			attr_dev(span2, "class", "edit-info svelte-1604ox4");
     			if (/*item*/ ctx[21].time === void 0) add_render_callback(span2_input_handler);
-    			add_location(span2, file, 170, 18, 4480);
-    			add_location(h31, file, 170, 7, 4469);
+    			add_location(span2, file, 170, 18, 4451);
+    			add_location(h31, file, 170, 7, 4440);
     			attr_dev(div1, "class", "time svelte-1604ox4");
-    			add_location(div1, file, 169, 6, 4440);
+    			add_location(div1, file, 169, 6, 4411);
     			option0.__value = "minutes";
     			option0.value = option0.__value;
-    			add_location(option0, file, 175, 8, 4770);
+    			add_location(option0, file, 175, 8, 4741);
     			option1.__value = "hours";
     			option1.value = option1.__value;
-    			add_location(option1, file, 176, 8, 4819);
+    			add_location(option1, file, 176, 8, 4790);
     			option2.__value = "seconds";
     			option2.value = option2.__value;
-    			add_location(option2, file, 177, 8, 4864);
+    			add_location(option2, file, 177, 8, 4835);
     			option3.__value = "days";
     			option3.value = option3.__value;
-    			add_location(option3, file, 178, 8, 4914);
+    			add_location(option3, file, 178, 8, 4885);
     			attr_dev(select, "id", "unit-selector");
     			attr_dev(select, "name", "units");
     			if (/*item*/ ctx[21].timeUnits === void 0) add_render_callback(select_change_handler_1);
-    			add_location(select, file, 174, 7, 4671);
+    			add_location(select, file, 174, 7, 4642);
     			attr_dev(div2, "class", "time-unit-selector svelte-1604ox4");
-    			add_location(div2, file, 173, 6, 4628);
+    			add_location(div2, file, 173, 6, 4599);
     			attr_dev(span3, "contenteditable", "true");
     			attr_dev(span3, "class", "edit-info svelte-1604ox4");
     			if (/*item*/ ctx[21].points === void 0) add_render_callback(span3_input_handler);
-    			add_location(span3, file, 183, 20, 5050);
-    			add_location(h32, file, 183, 7, 5037);
+    			add_location(span3, file, 183, 20, 5021);
+    			add_location(h32, file, 183, 7, 5008);
     			attr_dev(div3, "class", "points svelte-1604ox4");
-    			add_location(div3, file, 182, 6, 5009);
+    			add_location(div3, file, 182, 6, 4980);
     			attr_dev(span4, "contenteditable", "true");
     			attr_dev(span4, "class", "edit-info svelte-1604ox4");
     			if (/*item*/ ctx[21].description === void 0) add_render_callback(span4_input_handler);
-    			add_location(span4, file, 187, 16, 5247);
-    			add_location(em, file, 187, 11, 5242);
-    			add_location(p, file, 187, 7, 5238);
+    			add_location(span4, file, 187, 16, 5218);
+    			add_location(em, file, 187, 11, 5213);
+    			add_location(p, file, 187, 7, 5209);
     			attr_dev(div4, "class", "description svelte-1604ox4");
-    			add_location(div4, file, 186, 6, 5203);
+    			add_location(div4, file, 186, 6, 5174);
     			attr_dev(div5, "class", "grid-container svelte-1604ox4");
-    			add_location(div5, file, 163, 5, 4219);
+    			add_location(div5, file, 163, 5, 4190);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h1, anchor);
