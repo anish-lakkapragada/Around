@@ -105,7 +105,7 @@
             } 
 
             if (needToRender) {renderButton();}
-          }, 500); 
+          }, 499); 
 
         </script>
     
