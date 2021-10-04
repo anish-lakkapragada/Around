@@ -38,6 +38,7 @@
 <html lang="en"> 
     <head>
         <meta name="google-signin-client_id" content = "226901785403-n6l4602spok3ch7983t2a9muu4i96ffn.apps.googleusercontent.com"> 
+        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     </head>
         {#if inFirst2}
             <Loading></Loading>
@@ -108,7 +109,6 @@
 
         </script>
     
-        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     </body>
 </html>
 
