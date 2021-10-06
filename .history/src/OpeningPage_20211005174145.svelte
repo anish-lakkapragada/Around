@@ -31,8 +31,6 @@
 
         });
     }
-
-    window.addEventListener("resize", () => {window.renderButton()});
     
 </script>
 
@@ -67,7 +65,6 @@
           }           
 
           function renderButton() {
-            console.log("we in here!");
 
             const PERC_WIDTH = 0.3; 
             const PERC_HEIGHT = 0.1;
@@ -91,6 +88,26 @@
                 console.log(err);
             }
           }
+
+          let currentHeight = null;
+          let currentWidth = null;
+
+          /*setInterval(() => {
+            let needToRender = false; 
+            if (document.documentElement.clientHeight != currentHeight) {
+                currentHeight = document.documentElement.clientHeight;
+                needToRender = true;
+            }
+
+            if (document.documentElement.clientWidth != currentWidth) {
+                currentWidth = document.documentElement.clientWidth;
+                needToRender = true;
+            } 
+
+            if (needToRender) {renderButton();}
+          }, 499); */
+
+          
 
         </script>
     
