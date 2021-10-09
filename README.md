@@ -1,3 +1,3 @@
 # fun app to manage homework 
 
-thanks ronak for helping github pages work
+thanks ronak for helping github pages work!
